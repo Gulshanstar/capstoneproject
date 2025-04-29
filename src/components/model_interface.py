@@ -8,10 +8,11 @@ from langchain_core.messages import AIMessage, HumanMessage
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
 from langchain_community.llms import Ollama
+
 try:
-    from langchain_openai import ChatOpenAI
+    from langchain_google_genai import ChatGoogleGenerativeAI
 except ImportError:
-    ChatOpenAI = None
+    ChatGoogleGenerativeAI = None
 
 from src.exception import CustomException
 from src.logger import logging
@@ -46,17 +47,17 @@ class ModelInterface:
         
         # Initialize LLM
         try:
-            if model_provider == "openai":
-                if not ChatOpenAI:
+            if model_provider == "gemini-ai":
+                if not ChatGoogleGenerativeAI:
                     raise ImportError("langchain_openai not installed. Install with pip install langchain-openai")
                 
                 # Use API key from parameter or environment variable
-                self.api_key = api_key or os.environ.get("OPENAI_API_KEY")
+                self.api_key = api_key or os.environ.get("GOOGLE_API_KEY")
                 if not self.api_key:
-                    raise ValueError("OpenAI API key is required")
+                    raise ValueError("GOOGLEAI API key is required")
                 
-                self.llm = ChatOpenAI(
-                    model_name=model_name,
+                self.llm = ChatGoogleGenerativeAI(
+                    model=model_name,
                     temperature=temperature,
                     max_tokens=max_tokens,
                     api_key=self.api_key

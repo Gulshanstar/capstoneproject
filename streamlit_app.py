@@ -29,8 +29,8 @@ st.sidebar.header("Configuration")
 # Model selection
 model_provider = st.sidebar.selectbox(
     "Model Provider",
-    options=["ollama", "openai"],
-    help="Select the model provider. OpenAI requires an API key."
+    options=["ollama", "gemini-ai"],
+    help="Select the model provider. GOOGLE AI requires an API key."
 )
 
 # Model name selection based on provider
@@ -43,20 +43,20 @@ if model_provider == "ollama":
 else:  # OpenAI
     model_name = st.sidebar.selectbox(
         "Model Name",
-        options=["gpt-3.5-turbo", "gpt-4"],
-        help="Select the OpenAI model to use"
+        options=["gemini-2.0-flash", "gemini-pro"],
+        help="Select the GOOGLEAI model to use"
     )
 
 # API Key for OpenAI
 api_key = None
-if model_provider == "openai":
+if model_provider == "gemini-ai":
     # Try to get from environment first
-    api_key = os.environ.get("OPENAI_API_KEY", "")
+    api_key = os.environ.get("GOOGLE_API_KEY", "")
     # Allow user to enter API key in UI if not in environment
     if not api_key:
-        api_key = st.sidebar.text_input("OpenAI API Key", type="password")
+        api_key = st.sidebar.text_input("GOOGLE API Key", type="password")
         if not api_key:
-            st.sidebar.warning("Please enter an OpenAI API key or set the OPENAI_API_KEY environment variable")
+            st.sidebar.warning("Please enter an GOOGLE API key or set the GOOGLE_API_KEY environment variable")
 
 # Vector store type
 vector_store_type = st.sidebar.selectbox(

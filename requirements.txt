@@ -12,4 +12,6 @@ hdbscan
 umap-learn
 pydantic
 chromadb
+tf-keras
+langchain-google-genai
 -e .
